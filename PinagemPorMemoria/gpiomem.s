@@ -18,16 +18,17 @@
     openFile devmem, S_RDWR             @ Abrir /dev/mem com permissão de leitura e escrita
     movs r4, r0                         @ Descritor do arquivo /dev/mem
     
-    BPL 1f              @Verificar se ouve erro ao abrir o arquivo, Se não ouver erro pular para a label 1f
+    BPL mapear              @Verificar se ouve erro ao abrir o arquivo, Se não ouver erro pular para a label 1f
     
-    MOV R1, #1          @Caso dê erro, carrega o 1 em r1
+    @O valor 1 é frequentemente usado como descritor de arquivo para a saída padrão do terminal (stdout), que é o local onde mensagens de erro podem ser exibidas para o usuário
+    MOV R1, #1          @Caso dê erro, carrega o 1 em r1, o 1 
     LDR R2, =memOpnsz   @ Error msg
     LDR R2, [R2]        @ Carrega o valor que está na posição de memoria que r2 guarda, em r2
     writeFile R1, memOpnErr, R2  @Escreve arquivo de error (print de error)
     B _end  
 
     @ A configuração pode chamar o serviço Linux mmap2
-    1: 
+    mapear: 
         @r0: passar 0 para deixar o Linux escolher um endereço virtual adequado.
         @r1: passar o tamanho da memória que deseja mapear.
         @r2: passar as permissões que deseja atribuir ao mapeamento (por exemplo, PROT_READ + PROT_WRITE para permissão de leitura e escrita).
@@ -57,13 +58,14 @@
         movs r8, r0                           @ Manter o endereço virtual retornado
         
         @ Checar errors e printar se necessario
-        BPL 2f @ arquivo de número aberto ok
+        BPL continuar @ arquivo de número aberto ok
+        
         MOV R1, #1  @ stdout
         LDR R2, =memMapsz @ Error msg
         LDR R2, [R2]
         writeFile R1, memMapErr, R2     @Escreve arquivo de error (print de error)
         B _end
-    2:
+    continuar:
 .endm
 
 @ Macro nanoSleep para esperar 0,1 segundo
@@ -127,7 +129,7 @@
               .align 4 @ realign after strings
     
     @ mem address of gpio register / 4096
-    gpioaddr: .word 0x01C20800      @Endereço base do GPIO
+    gpioaddr: .word 0x1C20    @  0x01C20800 / 0x1000 (4096)   @Endereço base do GPIO / 0x1000
     pin17: .word 4 @ offset to select register
             .word 21 @ bit offset in select register
             .word 17 @ bit offset in set & clr register
