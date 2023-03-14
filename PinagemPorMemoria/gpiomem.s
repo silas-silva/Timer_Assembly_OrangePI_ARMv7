@@ -28,16 +28,30 @@
 
     @ A configuração pode chamar o serviço Linux mmap2
     1: 
-        ldr r5, =gpioaddr       @ Endereço da GPIO para dividir por 4096 posteriormente
-        ldr r5, [r5]            @ Carrega o endereço
-        
-        mov r1, #pagelen                      @ Tamano da memoria que queremos
-        @ Opções de proteção de memoria
-        
-        mov r2, #(PROT_READ + PROT_WRITE)     @Colocando permissão de leitura e escrita em r2
-        mov r3, #MAP_SHARED                   @ Opções de compartilhamento de memoria
+        @r0: passar 0 para deixar o Linux escolher um endereço virtual adequado.
+        @r1: passar o tamanho da memória que deseja mapear.
+        @r2: passar as permissões que deseja atribuir ao mapeamento (por exemplo, PROT_READ + PROT_WRITE para permissão de leitura e escrita).
+        @r3: passar MAP_SHARED para criar um mapeamento compartilhado.
+        @r4: passar o descritor de arquivo para /dev/mem.
+        @r5: passar o endereço físico da GPIO que deseja mapear.
+        @ O endereço virtual será retornado em r0, armazene em outro registrador, exemplo r8
+
         mov r0, #0                            @ Deixa o linux escolher o endereço virtual
-        mov r7, #sys_mmap2                    @ mmap2 numero de serviço (ele pega os dados de r1 a r3 como paramentros)
+        
+        mov r1, #pagelen                      @ Tamano da memoria que queremos 4096
+        
+        @ Opções de proteção de memoria
+        mov r2, #(PROT_READ + PROT_WRITE)     @Colocando permissão de leitura e escrita em r2 combina as permissões com a soma
+        
+        mov r3, #MAP_SHARED                   @ Opções de compartilhamento de memoria
+        
+        @r4 está recebendo o descritor do arquivo de dev/mem, na parte que abre o arquivo 
+
+        ldr r5, =gpioaddr       @ Endereço base da GPIO
+        ldr r5, [r5]            @ Carrega o endereço no r5
+        
+        mov r7, #sys_mmap2                    @ mmap2 = 192 numero de serviço (ele pega os dados de r1 a r3 como paramentros)
+        
         svc 0                                 @ Chamada de sistema
         
         movs r8, r0                           @ Manter o endereço virtual retornado
@@ -113,7 +127,7 @@
               .align 4 @ realign after strings
     
     @ mem address of gpio register / 4096
-    gpioaddr: .word 0x01C20800    @Endereço base do GPIO
+    gpioaddr: .word 0x01C20800      @Endereço base do GPIO
     pin17: .word 4 @ offset to select register
             .word 21 @ bit offset in select register
             .word 17 @ bit offset in set & clr register

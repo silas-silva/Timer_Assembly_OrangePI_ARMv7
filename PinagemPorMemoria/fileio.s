@@ -13,6 +13,11 @@
 .equ S_RDWR, 0666         @o valor 0666 significa que o arquivo pode ser lido e escrito por qualquer usuário no sistema, mas não pode ser executado como um programa
 
 .macro openFile fileName, flags
+	@Carregue o endereço da string com o nome do arquivo a ser aberto em r0.
+	@Carregue o modo de abertura do arquivo em r1. O modo é um valor inteiro que indica como o arquivo deve ser aberto (por exemplo, leitura, escrita, criação, etc.).
+	@Carregue o número da chamada do sistema em r7 com o valor 5.
+	@Chame a instrução svc 0 para executar a chamada do sistema.
+	
 	ldr r0, =\fileName					  @Nome do arquivo
 	mov r1, #\flags                       @Flag é como quero abrir o arquivo, leitura ou escrita, 0 ou 1 respectivamente
 	mov r2, #S_RDWR 					  @ Direitos de acesso a Leitura e Escrita
