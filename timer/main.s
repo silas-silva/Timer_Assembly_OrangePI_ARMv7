@@ -1,26 +1,36 @@
-.include "macros.s"
+.include "macrosMapTemp.s"
+.include "macrosPin.s"
+
+
+.equ PROT_READ, 1
+.equ PROT_WRITE, 2
+.equ MAP_SHARED, 1
+.equ S_RDWR, 0666
 
 .global _start
 
 _start:
-    mapMem
-    
-    ldr r6, [r8, #0x800]
+    openDevmem      @abrir arquivo devmem
+    mapMem          @Mapear
+    movs r8, r0     @Jogar o mapeamento em r8
 
-    @Acessar pinos com deslocamento 4
-    ldr r6, [r6, #4]   @Valor padrão 0x77777777 = 0111 0111 0111 0111 0111 0111 0111 0111
-    
-    @ 000 input, 001 output
-    @ Os bits de configuração do PA8 são os bits 0 1 e 2 (2:0)
-    @ 0111 0111 0111 0111 0111 0111 0111 0001 = 0x77777771
-    @ Carregar nova configuração em r6 -> Setar como output
-    str r6, [#0x77777771]
+    pinPA8_saida    @Configura PA8 como saida.
 
-    @Configurar PA_DAT -> Valor padrão = 0x00000000
-    @ldr r6, [r8, #0x810]
-    mov r1, 0x1000000    @0x100 0000 = 0000 0001 0000 0000 0000 0000 0000 0000
-    str r1, [r8, #0x810] @Acende o led
+loop:
+    pinPA8_saida_1  @Manda o bit 1 em PA8.
+    nanoSleep
+    pinPA8_saida_0  @Manda o bit 0 em PA8.
+    nanoSleep
+    b loop:
 
+end:
     mov r0, #0
     mov r7, #1
     svc 0
+
+.data
+    timespecsec: .word 0
+    timespecnano: .word 100000000
+    devmem: .asciz "/dev/mem"
+    gpioaddr: .word 0x1000
+    gpioaddr: .word 0x1C20    @0x01C20800 / 0x1000 (4096)   @Endereço base do GPIO / 0x1000
