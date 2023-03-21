@@ -1,4 +1,4 @@
-.include "macrosMapTemp.s"
+.include "macrosGerais.s"
 .include "macrosPin.s"
 
 

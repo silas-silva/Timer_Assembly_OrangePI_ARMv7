@@ -42,3 +42,20 @@
     mov r7, 162 @sys_nanosleep
     svc 0
 .endm
+
+
+.macro mod_division num1, num2
+    @ r0 - dividendo
+    @ r1 - divisor
+    @ r2 - quociente
+    @ r3 - resto
+    
+    mov r0, \num1                 @Numero a ser dividido
+    mov r1, \num2                 @Numero para dividir
+    sdiv r2, r0, r1               @Numero divido
+    
+    @Resto
+    mul r3, r1, r2                @Quociente x Divisor
+    sub r3, r0, r3                @Dividendo - (Quociente x Divisor)
+
+.endm
