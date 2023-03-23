@@ -13,15 +13,15 @@ _start:
     openDevmem      @abrir arquivo devmem
     mapMem          @Mapear
     movs r8, r0     @Jogar o mapeamento em r8
-    @D7
-    pin_saida offset, deslocamento
-    @D6
-    pin_saida offset, deslocamento
-    @D5
-    pin_saida offset, deslocamento
-    @D4
-    pin_saida offset, deslocamento
-    @RS
+
+    pinPA8_saida    @Configura PA8 como saida.
+
+loop:
+    pinPA8_saida_1  @Manda o bit 1 em PA8.
+    nanoSleep
+    pinPA8_saida_0  @Manda o bit 0 em PA8.
+    nanoSleep
+    b loop
 
 end:
     mov r0, #0
