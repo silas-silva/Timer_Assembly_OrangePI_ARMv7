@@ -1,3 +1,11 @@
+@Configuração de pinos para o led
+@PG07 -> d7
+@PG06 -> d6
+@PG09 -> d5
+@PG08 -> d4
+@PA18 -> E
+@PA02 -> RS
+
 
 @Setar o pino PA8 como saida
 .macro pinPA8_saida
@@ -6,7 +14,7 @@
                                 @Para setar como saida o PA8 setar os bits 2:0 como 001 -> 0x77777771  
                                 @000 input, 001 output
     lsl r6, r6, #4              @0x77777770 = 0111 0111 0111 0111 0111 0111 0111 0000
-    add, r6, #1                 @0x77777771 = 0111 0111 0111 0111 0111 0111 0111 0001
+    add r6, #1                 @0x77777771 = 0111 0111 0111 0111 0111 0111 0111 0001
     str r6, [r8, #0x804]        @Carrega a configuração
 .endm
 
@@ -17,7 +25,7 @@
     ldr r6, [r8, #0x810]        @Acessar pinos com deslocamento 0x10 do endereço base -> PA_DAT
                                 @Valor padrão do 0x810 é 0x00000000
                                 @Para setar o PA8 com saida logica alta, mudar o bit 8 para 1
-    add, r6, #1                 @0x00000001 = 0000 0000 0000 0000 0000 0000 0000 0001
+    add r6, #1                 @0x00000001 = 0000 0000 0000 0000 0000 0000 0000 0001
     lsl r6, r6, #8              @0000 0000 0000 0000 0000 0000 1000 0000
     str r6, [r8, #0x810]        @Carrega a configuração
 .endm
@@ -25,10 +33,9 @@
 
 @Setar o pino PA8 como padrão
 .macro pinPA8_padrao
-    ldr r6, [r8, #0x804]        @Acessar pinos com deslocamento 0x4 do endereço base
-                                @Valor está em 0x77777771
-    add, r6, #6                 @0x77777777
-    str r6, [r8, #0x804]        @Carrega a configuração
+    ldr r6, =padraoPin        
+    ldr r6, [r6]                @Carrega o valor 0x77777777 em r6
+    str r6, [r8, #0x804]        @Carrega a configuração para resetar os pinos de PA8
 .endm
 
 @Setar o PA8 como saida logica baixa

@@ -39,7 +39,7 @@
 .macro nanoSleep
     ldr r0, =timespecnano
     ldr r1, =timespecnano
-    mov r7, 162 @sys_nanosleep
+    mov r7, #162 @sys_nanosleep
     svc 0
 .endm
 
