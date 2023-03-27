@@ -81,29 +81,38 @@
 @r7: Dezena de Milhar
 @r9: Centena de Milhar
 @
-.macro num_para_digitos num
-    mov r1, \num
+.macro num_para_digitos
+    @Espera o numero salvo em R1
     mov r2, #10
-    mod_division r3, r2     @ Unidade
+    mod_division r1, r2     @ Unidade
     mov r3, r0              @ Unidade
-
-    sdiv r4, #10            @ Dezena
+		
+		mov r2, #10
+    sdiv r4, r1, r2        @ Dezena
     mod_division r4, r2     @ Dezena
     mov r4, r0              @ Dezena
-
-    sdiv r5, #100           @ Centena
+		
+		mov r2, #100
+    sdiv r5, r1, r2           @ Centena
+    mov r2, #10
     mod_division r5, r2     @ Centena
     mov r5, r0              @ Centena
-
-    sdiv r6, #1000          @ Milhar
+		
+		mov r2, #1000
+    sdiv r6, r1, r2          @ Milhar
+    mov r2, #10
     mod_division r6, r2     @ Milhar
     mov r6, r0              @ Milhar
-
-    sdiv r7, #10000         @ Dezena Milhar
+		
+		mov r2, #10000
+    sdiv r7, r1, r2         @ Dezena Milhar
+    mov r2, #10
     mod_division r7, r2     @ Dezena Milhar
     mov r7, r0              @ Dezena Milhar
-
-    sdiv r9, #100000        @ Centena Milhar
+		
+		mov r2, #100000
+    sdiv r9, r1, r2        @ Centena Milhar
+    mov r2, #10
     mod_division r9, r2     @ Centena Milhar
     mov r9, r0              @ Centena Milhar
 .endm
