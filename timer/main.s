@@ -9,8 +9,6 @@
 .global _start
 
 _start:
-    ldr r12, =numContar
-    ldr r12, [r12] 
     openDevmem      @abrir arquivo devmem
     mapMem          @Mapear
     movs r8, r0     @Jogar o mapeamento em r8
@@ -25,7 +23,10 @@ _start:
     b loop
 
 loop:
-    num_para_digitos r12
+		@COlocar numero a ser dividido em r1
+    ldr r1, =numContar
+    ldr r1, [r1]
+    num_para_digitos
     @ Mostrar digitos no Display
     b loop
 
@@ -45,9 +46,9 @@ end:
     pins_d7_d6_saida: .word 0x11777777
     pins_d5_d4_saida: .word 0x77777711
     pins_E_RS_saida: .word 0x77777177
-
+		numContar: .word 0xFF
     second: .word 1                 @ 1 segundo
     timeZero: .word 0
     timeZeroMili: .word 000000000
     timespecnano5: .word 5000000    @ 5 milissegundos
-	timespecnano120: .word 120000   @ 120 microssegundos
+		timespecnano120: .word 120000   @ 120 microssegundos
