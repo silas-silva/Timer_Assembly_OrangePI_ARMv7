@@ -1,6 +1,8 @@
 @Configuração de pinos para o led
+
 @PG07 -> d7   -> PG07 : Pino -> 30:28 : Bits de configuração -> 0xD8 : Offset
 @PG06 -> d6   -> PG06 : Pino -> 26:24 : Bits de configuração -> 0xD8 : Offset
+
 @PG09 -> d5   -> PG09 : Pino -> 06:04 : Bits de configuração -> 0xDC : Offset
 @PG08 -> d4   -> PG08 : Pino -> 02:00 : Bits de configuração -> 0xDC : Offset
 @ PG_DATA -> 0xE8 : Offset -> Bits para mandar sinal alto ou baixo pro pino

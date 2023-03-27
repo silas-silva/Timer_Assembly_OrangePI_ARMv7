@@ -1,6 +1,5 @@
 .include "macros_gerais.s"
-.include "macros_pin_08.s"
-.include "macros_pin_generica"
+.include "macros_pin_display.s"
 
 .equ PROT_READ, 1
 .equ PROT_WRITE, 2
@@ -10,18 +9,25 @@
 .global _start
 
 _start:
+    ldr r12, =numContar
+    ldr r12, [r12] 
     openDevmem      @abrir arquivo devmem
     mapMem          @Mapear
     movs r8, r0     @Jogar o mapeamento em r8
-    @D7
-    pin_saida offset, deslocamento
-    @D6
-    pin_saida offset, deslocamento
-    @D5
-    pin_saida offset, deslocamento
-    @D4
-    pin_saida offset, deslocamento
-    @RS
+    
+    @ Setar os pinos do display como saida
+    pins_display_saida
+    
+    @Ligar display
+    inicializar_display
+
+    @Timer
+    b loop
+
+loop:
+    num_para_digitos r12
+    @ Mostrar digitos no Display
+    b loop
 
 end:
     mov r0, #0
@@ -36,3 +42,12 @@ end:
     gpioaddr: .word 0x1C20    @0x01C20800 / 0x1000 (4096)   @Endereço base do GPIO / 0x1000
     padraoPin: .word 0x77777777
     padraoSaidaPin: .word 0x00000000
+    pins_d7_d6_saida: .word 0x11777777
+    pins_d5_d4_saida: .word 0x77777711
+    pins_E_RS_saida: .word 0x77777177
+
+    second: .word 1                 @ 1 segundo
+    timeZero: .word 0
+    timeZeroMili: .word 000000000
+    timespecnano5: .word 5000000    @ 5 milissegundos
+	timespecnano120: .word 120000   @ 120 microssegundos

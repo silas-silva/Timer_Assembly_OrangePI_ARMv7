@@ -43,9 +43,9 @@
 @r1: É o tempo restante para esperar se for interrompido
 @r7: Chama o ponto de entrada nanosleep do Linux, que é a função 162.
 @
-.macro nanoSleep segundo, miliSegundo
-    ldr r0, =\segundo
-    ldr r1, =\miliSegundo
+.macro nanoSleep
+    ldr r0, =timespecnano
+    ldr r1, =timespecnano
     mov r7, #162 @sys_nanosleep
     svc 0
 .endm
@@ -69,7 +69,6 @@
     mul r3, r1, r2                @Quociente x Divisor
     sub r0, r0, r3                @Dividendo - (Quociente x Divisor)
 .endm
-
 
 
 @
