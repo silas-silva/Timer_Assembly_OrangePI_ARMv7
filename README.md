@@ -58,6 +58,10 @@ make
 sudo ./main
 ```
 
+## Ferramentas
+- GDB : Para debugar a execução assembly na Orange Pi Pc Plus.
+- CPulator : Usado no inicio para compilar codigos simples em assembly. [https://cpulator.01xz.net/?sys=arm](https://cpulator.01xz.net/?sys=arm)
+
 ## Execução
 
 
