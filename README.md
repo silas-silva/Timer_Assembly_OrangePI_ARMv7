@@ -87,8 +87,8 @@ Após esse comando o GDB irá inicializar, para fazer uso do mesmo há um conjun
 
 Durante o processo de desenvolvimento, por ter poucos conteúdos sobre a placa em especifico (Orange Pi Pc Plus), foi utilizado para ajudar no processo, o livro "Raspberry Pi Assembly Language Programming", o que abstrai para a placa que tinha para o trabalho.
 A data prevista para terminar a atividade foi até dia 31/03/2023, e acabou não sendo possivel concluir o trabalho, o que consegui foi, fazer o mapeamento da GPIO do fisico para virtual, assim tendo acesso ao GPIO pude controlar os pinos, onde fui capaz de fazer um led acender, e posteriormente fazer o mesmo piscar, acendendo e apagando.
-Em sessões tutoriais decidimos usar o método de resto da divisão, para separar os digitos de um numero inteiro maior que 10, por exemplo o numero 117, ficaria "1", "1" e "7", usando o resto da divisão por 10, e divisões por multiplos de 10, conseguimos separar os digitos em unidade, dezena, centena, e assim por diante.
-Para mostrar os digitos, é necessario acessar e configurar o LCD, o que acabei tendo problemas para inicializar o display, onde no final não consegui mandar os dados para o LCD.
+Em sessões tutoriais decidimos usar o método de resto da divisão, para separar os digitos de um numero inteiro maior que 10, por exemplo o numero 117, ficaria "1", "1" e "7", usando o resto da divisão por 10, e divisões por multiplos de 10, conseguimos separar os digitos em unidade, dezena, centena, e assim por diante, essa parte também consegui fazer, onde usei um algoritimo para fazer esse processo e usei a instrução `sdiv` do assembly para ARMv7 para facilitar o processo de desenvolvimento.
+Para mostrar os digitos, é necessario acessar e configurar o LCD, onde acabei tendo problemas, tanto para inicializar o display, como para mandar dados para o mesmo, e no final não consegui mandar os dados para o LCD.
 
 ## Referências
 
