@@ -1,3 +1,4 @@
+@
 @ ============================================== DEVMEM E MAPEAMENTO ==============================================
 @
 @r0: Carregue o endereço da string com o nome do arquivo a ser aberto.
@@ -14,6 +15,9 @@
 .endm
 
 
+
+
+@
 @ =================================================== MAPMEM ===================================================
 @
 @r0: passar 0 para deixar o Linux escolher um endereço virtual adequado.
@@ -39,6 +43,9 @@
 .endm
 
 
+
+
+@
 @ =================================================== NANOSLEEP ===================================================
 @
 @r0: Tempo de entrada para esperar em segundos e nanossegundos.
@@ -55,6 +62,7 @@
 
 
 
+@
 @ ======================================== DIVISÂO E SEPARAÇÂO DE DIGITOS ========================================
 @Param:
 @ r0 - dividendo
