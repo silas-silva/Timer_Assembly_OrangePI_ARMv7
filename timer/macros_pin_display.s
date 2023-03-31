@@ -67,6 +67,7 @@
 @ Db4 On
 @
 .macro db4_on
+    mov r7, #1
     ldr r6, [r8, #0x8E8] @PG_dat
     lsl r7, r7, #8
     orr r6, r6, r7
@@ -78,9 +79,10 @@
 @ Db4 Off
 @
 .macro db4_off
+    mov r7, #1
     ldr r6, [r8, #0x8E8] @PG_dat
     lsl r7, r7, #8
-    orr r6, r6, r7
+    bic r6, r6, r7
     str r6, [r8, #0x8E8]
 .endm
 
@@ -90,6 +92,7 @@
 @ Db5 On
 @
 .macro db5_on
+    mov r7, #1
     ldr r6, [r8, #0x8E8] @PG_dat
     lsl r7, r7, #9
     orr r6, r6, r7
@@ -101,6 +104,7 @@
 @ Db5 Off
 @
 .macro db5_off
+    mov r7, #1
     ldr r6, [r8, #0x8E8] @PG_dat
     lsl r7, r7, #9
     bic r6, r6, r7
@@ -112,6 +116,7 @@
 @ Db6 On
 @
 .macro db6_on
+    mov r7, #1
     ldr r6, [r8, #0x8E8] @PG_dat
     lsl r7, r7, #6
     orr r6, r6, r7
@@ -123,6 +128,7 @@
 @ Db6 Off
 @
 .macro db6_off
+    mov r7, #1
     ldr r6, [r8, #0x8E8] @PG_dat
     lsl r7, r7, #6
     bic r6, r6, r7
@@ -134,6 +140,7 @@
 @ Db7 on
 @
 .macro db7_on
+    mov r7, #1
     ldr r6, [r8, #0x8E8] @PG_dat
     lsl r7, r7, #7
     orr r6, r6, r7
@@ -145,6 +152,7 @@
 @ Db7 Off
 @
 .macro db7_off
+    mov r7, #1
     ldr r6, [r8, #0x8E8] @PG_dat
     lsl r7, r7, #7
     bic r6, r6, r7
@@ -156,6 +164,7 @@
 @ RS On
 @
 .macro rs_on
+    mov r7, #1
     ldr r6, [r8, #0x810] @PA_dat
     mov r7, #1
     lsl r7, r7, #2
@@ -168,10 +177,11 @@
 @ RS Off
 @
 .macro rs_off
+    mov r7, #1
     ldr r6, [r8, #0x810] @PA_dat
     mov r7, #1
     lsl r7, r7, #2
-    orr r6, r6, r7
+    bic r6, r6, r7
     str r6, [r8, #0x810]
 .endm
 
@@ -180,6 +190,7 @@
 @ Enable On
 @
 .macro e_on
+    mov r7, #1
     ldr r6, [r8, #0x810] @PA_dat
     mov r7, #0x1
     lsl r7, r7, #18
@@ -192,6 +203,7 @@
 @ Enable Off
 @
 .macro e_off
+    mov r7, #1
     ldr r6, [r8, #0x810] @PA_dat
     mov r7, #0x1
     lsl r7, r7, #18
@@ -210,7 +222,7 @@
 .macro enable
     e_off
     e_on
-    nanoSleep timeZero, time_1_mili
+    nanoSleep timeZero, time_1_micro
     e_on
 .endm
 
