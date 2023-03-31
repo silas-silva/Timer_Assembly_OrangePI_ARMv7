@@ -56,65 +56,70 @@
 
 
 @ ======================================== DIVISÂO E SEPARAÇÂO DE DIGITOS ========================================
-@
+@Param:
 @ r0 - dividendo
 @ r1 - divisor
 @ r2 - quociente
 @ r3 - resto
+@Return
+@ r0 - Retorno com resto
 @
 .macro mod_division num1, num2
     mov r0, \num1                 @Numero a ser dividido
     mov r1, \num2                 @Numero para dividir
-    sdiv r2, r0, r1               @Numero divido
+    sdiv r3, r0, r1               @Numero divido
     
     @Resto
-    mul r3, r1, r2                @Quociente x Divisor
+    mul r3, r1, r3                @Quociente x Divisor
     sub r0, r0, r3                @Dividendo - (Quociente x Divisor)
 .endm
 
 
 
 @
-@Pegar 6 Digitos de um numero 
-@r3: Unidade
-@r4: Dezena
-@r5: Centena
-@r6: Milhar
-@r7: Dezena de Milhar
-@r9: Centena de Milhar
+@ Pegar 6 Digitos de um numero e joga em r9
+@ Espeara o numero a ser separado em r1
+@ Retorno r9: 0x00 unidade dezena centena milhar dezena_milhar centena_milhar (Cada um com 4 bits)
 @
 .macro num_para_digitos
-    @Espera o numero salvo em R1
-    mov r2, #10
-    mod_division r1, r2     @ Unidade
-    mov r3, r0              @ Unidade
+    mov r6, #0      @Limpar r3
+    mov r2, #10     @Numero para dividir e achar o resto
+
+    @ Pegar a unidade
+    mod_division r1, r2     @ Chama mod division com os valores de "r1 = numero para separar os bits" 
+    mov r9, r0              @ Mod division joga o resto em R0
+	lsl r9, r9, #4
+
+    @ Pegar a Dezena
+    sdiv r1, r1, r2         @ Divide o numero por 10
+    mod_division r1, r2     @ Resto da divisão
+    mov r9, r0              @ 
+    lsl r9, r9, #4
+
+    @ Pegar centena
+    sdiv r1, r1, r2          @ Divide o numero por 10 (Como foi dividido por 10 antes, é como se fosse por 100 agora)
+    mod_division r1, r2     @ Resto da divisão
+    mov r9, r0              @ 
+    lsl r9, r9, #4
+	
+
+    @ Pegar Unidade de Milhar
+    sdiv r1, r1, r2         @ Divide o numero por 10 (Como foi dividido por 10 2 vezes antes, é como se fosse por 1000 agora)
+    mod_division r1, r2     @ Resto da divisão
+    mov r9, r0
+    lsl r9, r9, #4
+
+	@ Pegar Dezena de Milhar
+    sdiv r1, r1, r2         @ Divide o numero por 10
+    mod_division r1, r2     @ Resto da divisão
+    mov r9, r0
+    lsl r9, r9, #4
 		
-		mov r2, #10
-    sdiv r4, r1, r2        @ Dezena
-    mod_division r4, r2     @ Dezena
-    mov r4, r0              @ Dezena
-		
-		mov r2, #100
-    sdiv r5, r1, r2           @ Centena
-    mov r2, #10
-    mod_division r5, r2     @ Centena
-    mov r5, r0              @ Centena
-		
-		mov r2, #1000
-    sdiv r6, r1, r2          @ Milhar
-    mov r2, #10
-    mod_division r6, r2     @ Milhar
-    mov r6, r0              @ Milhar
-		
-		mov r2, #10000
-    sdiv r7, r1, r2         @ Dezena Milhar
-    mov r2, #10
-    mod_division r7, r2     @ Dezena Milhar
-    mov r7, r0              @ Dezena Milhar
-		
-		mov r2, #100000
-    sdiv r9, r1, r2        @ Centena Milhar
-    mov r2, #10
-    mod_division r9, r2     @ Centena Milhar
-    mov r9, r0              @ Centena Milhar
+
+	@ Pegar Centena de Milhar
+    sdiv r1, r1, r2         @ Divide o numero por 10
+    mod_division r1, r2     @ Resto da divisão
+    mov r9, r0
+    lsl r9, r9
+
 .endm
