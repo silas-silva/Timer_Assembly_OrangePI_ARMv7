@@ -51,7 +51,8 @@ end:
     timeZeroMili: .word 000000000
     time_1_mili: .word 1000000
     time_5_mili: .word 5000000
-    time_15_mili: .word 15000000
+    time_4_mili: .word 4100000
+    time_1500_mili: .word 1500000000
     time_1_micro: .word 1000
     time_100_micro: .word 100000
     time_1_nano: .word 1000000000
