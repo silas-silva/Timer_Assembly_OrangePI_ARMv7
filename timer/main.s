@@ -15,9 +15,9 @@ _start:
 
     @ Setar os pinos do display como saida
     pins_display_saida
-    
+
     @Ligar display
-    inicializar_display
+    @inicializar_display
 
 end:
     mov r0, #0
@@ -36,15 +36,12 @@ end:
     len_num = .-num
     second: .word 1                 @ 1 segundo
     timeZero: .word 0
-    timeZeroMili: .word 000000000
     time_1_mili: .word 1000000
     time_5_mili: .word 5000000
     time_15_mili: .word 15000000
-    time_4_mili: .word 4100000
-    time_1500_mili: .word 1500000000
     time_1_micro: .word 1000
     time_100_micro: .word 100000
+    time_150_micro: .word 150000 
     time_1_nano: .word 1000000000
     time_100_nano: .word 1000000000
-    timespecnano5: .word 5000000    @ 5 milissegundos
-		timespecnano120: .word 120000   @ 120 microssegundos
+	timespecnano120: .word 120000   @ 120 microssegundos
