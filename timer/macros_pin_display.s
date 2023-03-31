@@ -87,7 +87,6 @@
 .endm
 
 
-
 @
 @ Db5 On
 @
@@ -221,9 +220,10 @@
 @
 .macro enable
     e_off
+    nanoSleep timeZero, time_1_mili
     e_on
-    nanoSleep timeZero, time_1_micro
-    e_on
+    nanoSleep timeZero, time_1_mili
+    e_off
 .endm
 
 
@@ -341,9 +341,8 @@
     db6_off
     db5_on
     db4_on
-    e_on
-    nanoSleep timeZero, time_4_mili
-    e_off
+    enable
+    nanoSleep timeZero, time_5_mili
 
 
     @set_display 0, 0, 0, 1, 1
@@ -352,11 +351,11 @@
     db6_off
     db5_on
     db4_on
-    e_on
-    nanoSleep timeZero, time_100_micro
-    e_off
+    enable
+    nanoSleep timeZero, time_150_micro
+    
 
-    @set_display  0, 0, 0, 1, 0
+    @set_display  0, 0, 0, 1, 1
     rs_off
     db7_off
     db6_off
@@ -397,10 +396,38 @@
 @
 .macro inicializar_display
     e_off
-    @Iniciar modo 4 bits
-    function_Set
+    
+    @rs, d7, d6, d5, d4
+    
+    @set_display 0, 0, 0, 1, 1
+    rs_off
+    db7_off
+    db6_off
+    db5_on
+    db4_on
+    enable
+    nanoSleep timeZero, time_5_mili
 
-    .ltorg
+
+    @set_display 0, 0, 0, 1, 1
+    rs_off
+    db7_off
+    db6_off
+    db5_on
+    db4_on
+    enable
+    nanoSleep timeZero, time_150_micro
+    
+
+    @set_display  0, 0, 0, 1, 1
+    rs_off
+    db7_off
+    db6_off
+    db5_on
+    db4_on
+    enable
+
+
     
     @rs, d7, d6, d5, d4
     @set_display 0, 0, 0, 1, 0
@@ -425,7 +452,7 @@
     rs_off
     db7_off
     db6_off
-    db5_on
+    db5_off
     db4_off
     enable
 
@@ -486,11 +513,13 @@
     enable
 
 
+    @display_off
+
+    @clear_display
 
     @display_on
     
     @Ligar display
-    @display_off
 
     @Modo de setar
     @entry_mode_set
@@ -499,5 +528,4 @@
     @set_h
     @clear_display
 
-    .ltorg
 .endm
