@@ -1,8 +1,8 @@
 @Configuração de pinos para o led
-@PG07 -> d7   -> PG07 : Pino -> 30:28 : Bits de configuração -> 0xD8 : Offset
-@PG06 -> d6   -> PG06 : Pino -> 26:24 : Bits de configuração -> 0xD8 : Offset
-@PG09 -> d5   -> PG09 : Pino -> 06:04 : Bits de configuração -> 0xDC : Offset
-@PG08 -> d4   -> PG08 : Pino -> 02:00 : Bits de configuração -> 0xDC : Offset
+@PG07 -> db7   -> PG07 : Pino -> 30:28 : Bits de configuração -> 0xD8 : Offset
+@PG06 -> db6   -> PG06 : Pino -> 26:24 : Bits de configuração -> 0xD8 : Offset
+@PG09 -> db5   -> PG09 : Pino -> 06:04 : Bits de configuração -> 0xDC : Offset
+@PG08 -> db4   -> PG08 : Pino -> 02:00 : Bits de configuração -> 0xDC : Offset
 @ PG_DATA -> 0xE8 : Offset -> Bits para mandar sinal alto ou baixo pro pino
 
 @PA18 -> E    -> PA18 : Pino -> 10:08 : Bits de configuração -> 0x08 : Offset
@@ -220,10 +220,11 @@
 @
 .macro enable
     e_off
-    nanoSleep timeZero, time_1_mili
     e_on
-    nanoSleep timeZero, time_1_mili
+    nanoSleep timeZero, time_1_micro
     e_off
+    nanoSleep timeZero, time_5_mili
+
 .endm
 
 
@@ -517,7 +518,7 @@
 
     @clear_display
 
-    @display_on
+    display_on
     
     @Ligar display
 
