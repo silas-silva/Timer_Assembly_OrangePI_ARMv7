@@ -17,7 +17,7 @@ _start:
     pins_display_saida
 
     @Ligar display
-    @inicializar_display
+    inicializar_display
 
 end:
     mov r0, #0
