@@ -1,0 +1,86 @@
+@Configuração de pinos para o led
+@PG07 -> d7   -> PG07 : Pino -> 30:28 : Bits de configuração -> 0xD8 : Offset
+@PG06 -> d6   -> PG06 : Pino -> 26:24 : Bits de configuração -> 0xD8 : Offset
+@PG09 -> d5   -> PG09 : Pino -> 06:04 : Bits de configuração -> 0xDC : Offset
+@PG08 -> d4   -> PG08 : Pino -> 02:00 : Bits de configuração -> 0xDC : Offset
+@ PG_DATA -> 0xE8 : Offset -> Bits para mandar sinal alto ou baixo pro pino
+
+@PA18 -> E    -> PA18 : Pino -> 10:08 : Bits de configuração -> 0x08 : Offset
+@PA02 -> RS   -> PA02 : Pino -> 10:08 : Bits de configuração -> 0x00 : Offset
+
+Forma 1: Controlar os bits do display 
+    Os bits estão assim -> 0000 0000 0000 0000 0000 0000 0000 0000
+    Precisa controlar os bits 6, 7, 8 e 9
+           pin7 pin6 pin9 pin8
+    RS R/W DB07 DB06 DB05 DB04
+    0   0   0    0    1     1 
+
+    pin9 = 1000
+    pin8 = 0100
+    pin7 = 0010
+    pin6 = 0001
+
+    Faz somas e fica assim -> 0000 0000 0000 0000 0000 0000 0000 1111 -> No caso de todos serem sinal logico alto
+    desloca 6 -> 0000 0000 0000 0000 0000 0011 1100 0000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Codigo para acender led com botão
+
+    pins_botoes_entrada
+    @Pino 8 led
+    ldr r6, [r8, #0x804]
+    mov r7, #0xF
+    bic r6, r6, r7
+    mov r7, #0x1
+    orr r6, r6, r7
+    str r6, [r8, #0x804]
+
+loop:
+    mov r9, #1
+    get_pa20
+    cmp r9, #0
+    bgt acender_led
+    b apagar_led
+
+
+acender_led:
+    mov r9, #0
+    mov r7, #1
+    ldr r6, [r8, #0x810] @PA data
+    lsl r7, r7, #8
+    orr r6, r6, r7
+    str r6, [r8, #0x810]
+    get_pa20
+    cmp r9, #0
+    bgt apagar_led
+    b acender_led
+
+
+apagar_led:
+    mov r9, #0
+    mov r7, #1
+    ldr r6, [r8, #0x810] @PA data
+    lsl r7, r7, #8
+    bic r6, r6, r7
+    str r6, [r8, #0x810]
+    get_pa20
+    cmp r9, #0
+    bgt acender_led
+    b apagar_led
