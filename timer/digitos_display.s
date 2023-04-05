@@ -27,12 +27,27 @@
 .endm
 
 
+.macro set_nums
+    .ltorg
+    set_0
+    set_1
+    set_2
+    set_3
+    set_4
+    set_5
+    set_6
+    set_7
+    set_8
+    set_9
+    .ltorg
+.endm
+
+
 @
 @ ===================================================== Setar Dig 0 =====================================================
 @
 
 .macro set_0
-    
     padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -42,8 +57,7 @@
     db6_off
     db5_off
     db4_off
-    enable
-    
+    enable    
 .endm
 
 
@@ -64,7 +78,6 @@
     db5_off
     db4_on
     enable
-    
 .endm
 
 
@@ -75,7 +88,6 @@
 @
 
 .macro set_2
-	
 	padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -96,7 +108,6 @@
 @
 
 .macro set_3
-	
 	padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -107,8 +118,6 @@
     db5_on
     db4_on
     enable
-
-
 .endm
 
 
@@ -119,7 +128,6 @@
 @
 
 .macro set_4
-	
 	padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -140,7 +148,6 @@
 @
 
 .macro set_5
-	
 	padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -161,7 +168,6 @@
 @
 
 .macro set_6
-	
 	padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -182,7 +188,6 @@
 @
 
 .macro set_7
-	
 	padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -203,7 +208,7 @@
 @
 
 .macro set_8
-	
+	.ltorg
 	padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -214,6 +219,7 @@
     db5_off
     db4_off
     enable
+    .ltorg
 .endm
 
 
@@ -224,7 +230,6 @@
 @
 
 .macro set_9
-	
 	padrao_setar_numero
 
     @rs, d7, d6, d5, d4
@@ -236,3 +241,4 @@
     db4_on
     enable
 .endm
+
