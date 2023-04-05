@@ -10,8 +10,8 @@
 
     @Mostrar unidade de milhar
     mostrar_e_apagar_digito
-
-
+    
+    
     @Mostrar centena
     mostrar_e_apagar_digito
 
@@ -31,10 +31,10 @@
     lsr r9, r9, #4                 @Tirar o digito do registrador r9
 
     mostrar_digitos                @Passar o digito no registrador r3
-
 .endm
 
 .macro mostrar_digitos
+    .ltorg
     cmp r3, #0
     beq mostrar_0
 
@@ -64,6 +64,7 @@
 
     cmp r3, #9
     beq mostrar_9
+    .ltorg
 .endm
 
 
