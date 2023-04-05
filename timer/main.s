@@ -28,16 +28,16 @@ _start:
 
     clear_display
 
-    set_nums
+    @set_nums
 
-    b loop_teste
+    @b loop_teste
 
     @ Parte não funcional, timer contando
     
     @ldr r11, =num
     @ldr r11, [r11]
 
-    @b loop_digitos
+    b loop_digitos
 
 
 @
