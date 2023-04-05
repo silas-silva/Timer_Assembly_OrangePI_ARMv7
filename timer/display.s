@@ -217,7 +217,6 @@
 @
 .macro inicializar_display
     e_off
-    
     @setar função de 4 bits
     function_set
     
@@ -261,6 +260,5 @@
 
 
     @Ligar display
-    display_on
-    
+    display_on    
 .endm
