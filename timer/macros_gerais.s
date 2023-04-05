@@ -73,11 +73,11 @@
 @
 .macro mod_division num1, num2
     mov r0, \num1                 @Numero a ser dividido
-    mov r1, \num2                 @Numero para dividir
-    sdiv r3, r0, r1               @Numero divido
+    mov r13, \num2                 @Numero para dividir
+    sdiv r3, r0, r13               @Numero divido
     
     @Resto
-    mul r3, r1, r3                @Quociente x Divisor
+    mul r3, r13, r3                @Quociente x Divisor
     sub r0, r0, r3                @Dividendo - (Quociente x Divisor)
 .endm
 
