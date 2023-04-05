@@ -40,7 +40,6 @@ _start:
 
 loop_digitos:
     mov r12, #0
-    sub r11, #1 @Diminuir do valor
     mov r1, r11
     
     @Valor a ser mostrado no LCD tem que estar em r1 e o retorno de "num_para_digitos" está em r9
@@ -55,6 +54,8 @@ loop_digitos:
 
 esperar_voltar_loop:
     nanoSleep timeZero, time_900_mili
+    
+    sub r11, #1 @Diminuir do valor
 
     @ Pegar dados dos botões
     get_pa20
