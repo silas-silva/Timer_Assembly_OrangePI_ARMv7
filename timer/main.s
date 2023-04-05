@@ -26,13 +26,68 @@ _start:
     @Ligar display
     inicializar_display
 
-    ldr r11, =num
-    ldr r11, [r11]
+    clear_display
 
-    b loop_digitos
+    set_nums
+
+    b loop_teste
+
+    @ Parte não funcional, timer contando
+    
+    @ldr r11, =num
+    @ldr r11, [r11]
+
+    @b loop_digitos
 
 
+@
+@ ================================= TESTE ==================================
+@
 
+loop_teste:
+    get_pa20
+    get_pa10
+
+    @ 
+    cmp r2,#0           @Verificar se PA20 foi pressionado
+    beq apagar_numeros
+    
+    cmp r1,#0  @Verificar se PA10 foi pressionado
+    beq setar_numeros_novamente
+    
+    b loop_teste
+
+
+setar_numeros_novamente:
+    set_nums
+
+    get_pa20
+    get_pa10
+
+    @ 
+    cmp r2,#0           @Verificar se PA20 foi pressionado
+    beq apagar_numeros
+    
+    cmp r1,#0  @Verificar se PA10 foi pressionado
+    beq setar_numeros_novamente
+
+    b apagar_numeros
+
+
+apagar_numeros:
+    clear_display
+
+    get_pa20
+    get_pa10
+
+    @ 
+    cmp r2,#0           @Verificar se PA20 foi pressionado
+    beq apagar_numeros
+    
+    cmp r1,#0  @Verificar se PA10 foi pressionado
+    beq setar_numeros_novamente
+
+    b apagar_numeros
 
 @
 @ ======================================== Loop para o timer e mostrar bits ========================================
@@ -62,7 +117,7 @@ esperar_voltar_loop:
     get_pa10
 
     @ Condição de pause
-    cmp r9,#0  @Verificar se PA20 foi pressionado
+    cmp r2,#0  @Verificar se PA20 foi pressionado
     beq pause
     
     @ Condição de Reiniciar timer
@@ -79,6 +134,7 @@ digitos:
 
 
 
+
 @
 @ ======================================== PAUSE/REINICIAR e RESETAR ========================================
 @
@@ -87,7 +143,7 @@ pause:
     get_pa10
     
     @ Condição para continuar
-    cmp r9,#0  @Verificar se PA20 foi pressionado
+    cmp r2,#0  @Verificar se PA20 foi pressionado
     beq loop_digitos
     
     @ Condição de Reiniciar timer
