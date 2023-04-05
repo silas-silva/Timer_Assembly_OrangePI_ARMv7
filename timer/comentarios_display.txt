@@ -22,3 +22,62 @@ Forma 1: Controlar os bits do display
 
     Faz somas e fica assim -> 0000 0000 0000 0000 0000 0000 0000 1111 -> No caso de todos serem sinal logico alto
     desloca 6 -> 0000 0000 0000 0000 0000 0011 1100 0000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Codigo para acender led com botão
+
+    pins_botoes_entrada
+    @Pino 8 led
+    ldr r6, [r8, #0x804]
+    mov r7, #0xF
+    bic r6, r6, r7
+    mov r7, #0x1
+    orr r6, r6, r7
+    str r6, [r8, #0x804]
+
+loop:
+    mov r9, #1
+    get_pa20
+    cmp r9, #0
+    bgt acender_led
+    b apagar_led
+
+
+acender_led:
+    mov r9, #0
+    mov r7, #1
+    ldr r6, [r8, #0x810] @PA data
+    lsl r7, r7, #8
+    orr r6, r6, r7
+    str r6, [r8, #0x810]
+    get_pa20
+    cmp r9, #0
+    bgt apagar_led
+    b acender_led
+
+
+apagar_led:
+    mov r9, #0
+    mov r7, #1
+    ldr r6, [r8, #0x810] @PA data
+    lsl r7, r7, #8
+    bic r6, r6, r7
+    str r6, [r8, #0x810]
+    get_pa20
+    cmp r9, #0
+    bgt acender_led
+    b apagar_led

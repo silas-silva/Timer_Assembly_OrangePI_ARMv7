@@ -129,6 +129,53 @@
 
 
 @
+@ ======================================= Deslocar Cursor ===============================================
+@
+@ Faz o curso se deslocar pelas casas do LCD
+@
+.macro deslocar_direita
+    @rs, d7, d6, d5, d4
+    @set_display 0, 0, 0, 0, 1
+    rs_off
+    db7_off
+    db6_off
+    db5_off
+    db4_on
+    enable
+
+    @set_display 0, 0, 1, 0, 0
+    rs_off
+    db7_off
+    db6_on
+    db5_off
+    db4_off
+    enable
+.endm
+
+
+.macro deslocar_esquerda
+    @rs, d7, d6, d5, d4
+    @set_display 0, 0, 0, 0, 1
+    rs_off
+    db7_off
+    db6_off
+    db5_off
+    db4_on
+    enable
+
+    @set_display 0, 0, 0, 0, 0
+    rs_off
+    db7_off
+    db6_off
+    db5_off
+    db4_off
+    enable
+.endm
+
+
+
+
+@
 @ ========================================================= Set Função 4 bits =========================================================
 @
 .macro function_set
@@ -160,31 +207,6 @@
     db6_off
     db5_on
     db4_on
-    enable
-.endm
-
-
-
-
-@ ===================================================== Setar Letra H =====================================================
-@
-
-.macro set_h
-    @rs, d7, d6, d5, d4
-    @set_display 1, 0, 1, 0, 0
-    rs_on
-    db7_off
-    db6_on
-    db5_off
-    db4_off
-    enable
-
-    @set_display 1, 1, 0, 0, 0
-    rs_on
-    db7_on
-    db6_off
-    db5_off
-    db4_off
     enable
 .endm
 

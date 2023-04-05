@@ -69,9 +69,9 @@
 @
 .macro get_pa10
     ldr r6, [r8, #0x810] @PA dat
-    mov r9, #1
+    mov r1, #1
     lsr r6, r6, #10
-    and r9, r6, r9 @Se r9 = 1 botão desligado, se r9 = 0 botão ligado
+    and r1, r6, r1 @Se r1 = 1 botão desligado, se r1 = 0 botão ligado
 .endm
 
 

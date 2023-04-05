@@ -67,7 +67,6 @@
 @Param:
 @ r0 - dividendo
 @ r1 - divisor
-@ r2 - quociente
 @ r3 - resto
 @Return
 @ r0 - Retorno com resto
@@ -90,7 +89,7 @@
 @ Retorno r9: 0x00 unidade dezena centena milhar dezena_milhar centena_milhar (Cada um com 4 bits)
 @
 .macro num_para_digitos
-    mov r6, #0      @Limpar r3
+    mov r9, #0      @Limpar r9
     mov r2, #10     @Numero para dividir e achar o resto
 
     @ Pegar a unidade
