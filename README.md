@@ -89,12 +89,28 @@ Após esse comando o GDB irá inicializar, para fazer uso do mesmo há um conjun
 - `s` Executa o código linha a linha e os pontos de parada definidos
 - `i r` Exibe os valores e estados atuais dos registradores
 
+
 ## Problemas encontrados durante o desenvolvimento
 
+### Problemas sobre conteúdo para estudo
 Durante o processo de desenvolvimento, por ter poucos conteúdos sobre a placa em especifico (Orange Pi Pc Plus), foi utilizado para ajudar no processo, o livro "Raspberry Pi Assembly Language Programming", o que abstrai para a placa que tinha para o trabalho.
-A data prevista para terminar a atividade foi até dia 31/03/2023, e acabou não sendo possivel concluir o trabalho, o que consegui foi, fazer o mapeamento da GPIO do fisico para virtual, assim tendo acesso ao GPIO pude controlar os pinos, onde fui capaz de fazer um led acender, e posteriormente fazer o mesmo piscar, acendendo e apagando.
-Em sessões tutoriais decidimos usar o método de resto da divisão, para separar os digitos de um numero inteiro maior que 10, por exemplo o numero 117, ficaria "1", "1" e "7", usando o resto da divisão por 10, e divisões por multiplos de 10, conseguimos separar os digitos em unidade, dezena, centena, e assim por diante, essa parte também consegui fazer, onde usei um algoritimo para fazer esse processo e usei a instrução `sdiv` do assembly para ARMv7 para facilitar o processo de desenvolvimento.
-Para mostrar os digitos, é necessario acessar e configurar o LCD, onde acabei tendo problemas, tanto para inicializar o display, como para mandar dados para o mesmo, e no final não consegui mandar os dados para o LCD.
+
+### Problemas encontrados e suas soluções
+O primeiro problema encontrado foi para fazer o mapeamento da GPIO do fisico para virtual, problema esse que consegui resolver com a syscall sys_mmap2 que é a chamada de sistema com o valor 192, fazendo assim o SO (sistema operacional) mapear a memoria fisica para uma virtual que ele conheça, com acesso ao mapeamento pude controlar os pinos, também fui capaz de fazer um led acender, e posteriormente fazer o mesmo piscar, acendendo e apagando usando o nanosleep para dar um tempo.
+
+
+### Problema para dividir um numero de digitos
+Tendo um numero qualquer, por exemplo "177" como conseguir os digitos individuais dele? os digitos seriam "1", "7" e "7". Em sessões tutoriais decidimos usar o método de resto da divisão, para fazer esse processo, e conseguimos separar os digitos em unidade, dezena, centena, e assim por diante. Usei um algoritimo para fazer esse processo e foi usada a instrução `sdiv` do assembly para ARMv7 para facilitar o processo de desenvolvimento.
+
+
+### LCD
+O LCD foi a mais complicada, pois tinha muitos detalhes para inicia-lo corretamente, principalmente no quesito de tempo, por fim consegui inicializar o display depois de um bom tempo tentando e com ajuda dos professores que me ajudaram com insight importantes. O que fiz no display depois de inicializar, foi exibir dados e limpa-lo caso fosse necessário, assim cobrindo praticamente todas as funções necessárias para o cumprimento do problema de PBL.
+
+### Juntar tudo
+As partes individuais funcionando, e chegou a hora de juntar tudo, e nessa parte o problema veio, pois não tinha tempo para lapidar o código e encontrar possíveis problemas, acabou que não consegui juntar tudo, logo para a apresentação, só mostrei na tela os digitos que conseguia escrever e limpar a tela através de um botão, só para demonstrar que tenho certa proficiência com o controle do display através do assembly.
+
+
+
 
 ## Referências
 

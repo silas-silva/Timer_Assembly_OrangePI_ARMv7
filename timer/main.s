@@ -27,21 +27,26 @@ _start:
     inicializar_display
 
     clear_display
-
+    
+    ldr r11, =num
+    ldr r11, [r11]
+    
+    b loop_digitos
+    
+    
+    
+    @ Teste usado na apresentação
+    
     @set_nums
-
     @b loop_teste
-
     @ Parte não funcional, timer contando
     
-    @ldr r11, =num
-    @ldr r11, [r11]
 
-    b loop_digitos
+    
 
 
 @
-@ ================================= TESTE ==================================
+@ ================================= Teste usado na apresentação ==================================
 @
 
 loop_teste:
@@ -98,10 +103,10 @@ loop_digitos:
     mov r1, r11
     
     @Valor a ser mostrado no LCD tem que estar em r1 e o retorno de "num_para_digitos" está em r9
-    num_para_digitos
+    num_para_digitos    @Macro localizada em "macros_gerais.s"
 
     @Limpar display
-    clear_display
+    clear_display       @Macro localizada em "display.s"
     
     @mostrar digitos
     b digitos
@@ -139,8 +144,8 @@ digitos:
 @ ======================================== PAUSE/REINICIAR e RESETAR ========================================
 @
 pause:
-    get_pa20
-    get_pa10
+    get_pa20          @Macro localizada em "pins_controle.s"
+    get_pa10          @Macro localizada em "pins_controle.s"
     
     @ Condição para continuar
     cmp r2,#0  @Verificar se PA20 foi pressionado
@@ -164,43 +169,43 @@ restaura_timer:
 
 mostrar_0:
     set_0
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos    @ @Macro localizada em "mostrar_digitos.s"
 
 mostrar_1:
     set_1
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos     @ @Macro localizada em "mostrar_digitos.s"
 
 mostrar_2:
     set_2
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos      @ @Macro localizada em "mostrar_digitos.s"
 
 mostrar_3:
     set_3
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos       @ @Macro localizada em "mostrar_digitos.s"
 
 mostrar_4:
     set_4
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos        @ @Macro localizada em "mostrar_digitos.s"
 
 mostrar_5:
     set_5
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos        @ @Macro localizada em "mostrar_digitos.s"
 
 mostrar_6:
     set_6
-    voltar_para_outros_digitos
-
+    voltar_para_outros_digitos         @ @Macro localizada em "mostrar_digitos.s"
+ 
 mostrar_7:
     set_7
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos          @ @Macro localizada em "mostrar_digitos.s"
 
 mostrar_8:
     set_8
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos           @ @Macro localizada em "mostrar_digitos.s"
 
 mostrar_9:
     set_9
-    voltar_para_outros_digitos
+    voltar_para_outros_digitos            @ @Macro localizada em "mostrar_digitos.s"
 
 
 
