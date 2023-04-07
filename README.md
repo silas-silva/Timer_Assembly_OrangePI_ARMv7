@@ -36,7 +36,7 @@ Com o propósito de criar uma biblioteca que possa ser utilizada posteriormente 
 ## Passo a passo
 
 1. Acessar a Orange Pi Pc Plus via ssh
-2. Realizar git-clone deste repositório com o comando:
+2. Realizar git-clone deste repositório com o comando: (Se não tiver acesso a internet na placa, baixe o projeto e copie os arquivos da pasta timer)
 
 ```
 git clone git@github.com:silas-silas/Timer_Assembly_OrangePI_ARMv7
