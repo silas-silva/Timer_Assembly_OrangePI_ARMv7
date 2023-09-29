@@ -1,7 +1,3 @@
-.include "macros_gerais.s"
-.include "macros_pin_08.s"
-.include "macros_pin_generica"
-
 .equ PROT_READ, 1
 .equ PROT_WRITE, 2
 .equ MAP_SHARED, 1
@@ -10,20 +6,35 @@
 .global _start
 
 _start:
-    openDevmem      @abrir arquivo devmem
-    mapMem          @Mapear
-    movs r8, r0     @Jogar o mapeamento em r8
+    ldr r0, =devmem       
+	mov r1, #2            
+	mov r2, #S_RDWR       
+	mov r7, #5            
+	svc 0
+    mov r4, r0            
+    mov r0, #0            
+    ldr r1, =pagelen      
+    ldr r1, [r1]          
+    mov r2, #(PROT_READ + PROT_WRITE)      
+    mov r3, #MAP_SHARED   
+    ldr r5, =gpioaddr     
+    ldr r5, [r5]          
+    mov r7, #192         
+    svc 0
 
-    pinPA8_saida    @Configura PA8 como saida.
+    movs r8, r0
 
-loop:
-    pinPA8_saida_1  @Manda o bit 1 em PA8.
-    nanoSleep
-    pinPA8_saida_0  @Manda o bit 0 em PA8.
-    nanoSleep
-    b loop
+    ldr r6, [r8, #0x804] 
+    lsl r6, r6, #4             
+    add r6, #1                
+    str r6, [r8, #0x804]        
 
-end:
+    ldr r6, [r8, #0x810]                                      
+    add r6, #1                 
+    lsl r6, r6, #8              
+    str r6, [r8, #0x810]        
+
+    
     mov r0, #0
     mov r7, #1
     svc 0
